@@ -1,23 +1,18 @@
-package ru.itis.akvelonitispractice.models;
+package ru.itis.akvelonitispractice.DTO;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.itis.akvelonitispractice.models.enums.TaskStatus;
 
-import javax.persistence.*;
+import javax.validation.constraints.PositiveOrZero;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-public class Task {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class TaskUpdateDto {
 
     private String name;
 
@@ -25,10 +20,6 @@ public class Task {
 
     private TaskStatus status;
 
+    @PositiveOrZero
     private Integer priority;
-
-    @ManyToOne
-    @JsonBackReference
-    private Project project;
-
 }

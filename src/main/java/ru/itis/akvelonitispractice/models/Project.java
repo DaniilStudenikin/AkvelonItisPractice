@@ -1,9 +1,11 @@
 package ru.itis.akvelonitispractice.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.itis.akvelonitispractice.models.enums.ProjectStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,20 +21,19 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String projectName;
+    private String name;
 
-    private LocalDateTime projectStartDateTime;
+    private LocalDateTime start;
 
-    private LocalDateTime projectCompletionDateTime;
+    private LocalDateTime completion;
 
-    private ProjectStatus projectStatus;
+    @Enumerated(value = EnumType.STRING)
+    private ProjectStatus status;
 
-    private Integer projectPriority;
+    private Integer priority;
 
-    @OneToMany
-    private List<Task> projectTasks;
+    @OneToMany(mappedBy = "project")
+    @JsonManagedReference
+    private List<Task> tasks;
 
-    public enum ProjectStatus {
-        NotStarted, Active, Completed
-    }
 }

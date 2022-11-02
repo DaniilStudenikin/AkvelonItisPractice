@@ -20,10 +20,10 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @PostMapping(value = "/task/create/{projectId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/tasks/{projectId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createTask(@PathVariable(name = "projectId") Long projectId, @Valid @RequestBody TaskCreateDto taskCreateDto) {
         taskService.createTask(projectId, taskCreateDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping(value = "/task/{task_id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -31,13 +31,13 @@ public class TaskController {
         return ResponseEntity.ok(taskService.getTask(taskId));
     }
 
-    @PutMapping(value = "/task/update/{task_id}")
+    @PutMapping(value = "/tasks/{task_id}")
     public ResponseEntity<String> updateTask(@PathVariable(name = "task_id") Long taskId, @Valid @RequestBody TaskUpdateDto taskUpdateDto) {
         taskService.updateTask(taskId, taskUpdateDto);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping(value = "/task/delete/{task_id}")
+    @DeleteMapping(value = "/tasks/{task_id}")
     public ResponseEntity<String> deleteTask(@PathVariable(name = "task_id") Long taskId) {
         taskService.deleteTask(taskId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

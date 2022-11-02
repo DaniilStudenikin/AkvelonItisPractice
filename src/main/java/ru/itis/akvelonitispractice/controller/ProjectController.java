@@ -1,8 +1,5 @@
 package ru.itis.akvelonitispractice.controller;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,24 +20,24 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
-    @PostMapping(value = "/project/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/projects", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createProject(@Valid @RequestBody ProjectCreateDto createDto) {
         projectService.createProject(createDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping(value = "/project/{project_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/projects/{project_id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Project> getProject(@PathVariable(name = "project_id") Long projectId) {
         return ResponseEntity.ok(projectService.getProject(projectId));
     }
 
-    @PutMapping(value = "/project/update/{project_id}")
+    @PutMapping(value = "/projects/{project_id}")
     public ResponseEntity<String> updateProject(@NotBlank @PathVariable(name = "project_id") Long projectId, @Valid @RequestBody ProjectUpdateDto updateDto) {
         projectService.updateProject(projectId, updateDto);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping(value = "/project/delete/{project_id}")
+    @DeleteMapping(value = "/projects/{project_id}")
     public ResponseEntity<String> deleteProject(@PathVariable(name = "project_id") Long projectId) {
         projectService.deleteProject(projectId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

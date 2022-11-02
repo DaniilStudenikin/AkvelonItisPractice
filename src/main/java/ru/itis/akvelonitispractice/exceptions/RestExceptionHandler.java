@@ -52,4 +52,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             throw new RuntimeException(e);
         }
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    protected ResponseEntity<String> invalid(IllegalArgumentException ex) {
+        ErrorMessage errorMessage = ErrorMessage.builder().error(ex.getMessage()).build();
+        try {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(objectMapper.writeValueAsString(errorMessage));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
